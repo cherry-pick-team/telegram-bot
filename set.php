@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 $bot_api_key = getenv('TELEGRAM_BOT_KEY');
 $bot_username = getenv('TELEGRAM_BOT_NAME');
 
