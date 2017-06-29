@@ -2,4 +2,4 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-phpinfo();
+var_dump(getenv('TELEGRAM_BOT_NAME'));
