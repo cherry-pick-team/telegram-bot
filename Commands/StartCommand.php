@@ -1,11 +1,11 @@
 <?php
 
-namespace Longman\TelegramBot\Commands\UserCommands;
+namespace Longman\TelegramBot\Commands\SystemCommands;
 
-use Longman\TelegramBot\Commands\UserCommand;
+use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Request;
 
-class StartCommand extends UserCommand
+class StartCommand extends SystemCommand
 {
     /**
      * @var string
@@ -36,7 +36,7 @@ class StartCommand extends UserCommand
         $chat_id = $message->getChat()->getId();
         $from = $message->getFrom();
 
-        $welcomeText = 'Hello, ' . $from->getUsername() . '! ';
+        $welcomeText = 'Hello, ' . $from->getUsername() . '! ' . PHP_EOL;
         $welcomeText .= 'This is ShoZaSong. Try using /search to find some songs.';
         return Request::sendMessage([
             'chat_id' => $chat_id,
