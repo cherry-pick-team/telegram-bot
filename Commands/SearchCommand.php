@@ -58,7 +58,8 @@ class SearchCommand extends UserCommand
                     if (++$i > 3) {
                         return Request::sendMessage([
                             'chat_id' => $chat_id,
-                            'text' => 'More search results: ' . $this->getSearchUrl($words),
+                            'parse_mode' => 'MARKDOWN',
+                            'text' => 'More search results: [' . $words . '](' . $this->getSearchUrl($words) . ')',
                         ]);
                     }
 
