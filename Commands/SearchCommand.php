@@ -89,8 +89,8 @@ class SearchCommand extends UserCommand
 
                 return Request::sendMessage([
                     'chat_id' => $chat_id,
-                    'parse_type' => 'markdown',
-                    'text' => 'That\'s all! Full search results: [' . $words . '](' . $this->getSearchUrl($words) . ')',
+                    'parse_type' => 'MARKDOWN',
+                    'text' => 'That\'s all! All the search results: [' . $words . '](' . $this->getSearchUrl($words) . ')',
                 ]);
             }
         }
