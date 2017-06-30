@@ -18,6 +18,10 @@ class StartCommand extends UserCommand
     /**
      * @var string
      */
+    protected $usage = '/start';
+    /**
+     * @var string
+     */
     protected $version = '0.1.0';
 
     /**
