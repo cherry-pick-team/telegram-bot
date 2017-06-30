@@ -78,8 +78,13 @@ class SearchCommand extends UserCommand
                         'chat_id' => $chat_id,
                         'caption' => $caption . ' (Album "' . $song['album']['name'] . '")',
                     ], $tmpFile);
+                    
+                    Request::sendChatAction([
+                        'chat_id' => $chat_id,
+                        'action' => 'typing',
+                    ]);
 
-                    sleep(4);
+                    sleep(3);
                 }
 
                 return Request::sendMessage([
