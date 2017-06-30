@@ -118,6 +118,8 @@ class SearchCommand extends UserCommand
                 ) {
                     return [];
                 }
+
+                return $response;
             }
         }
 
