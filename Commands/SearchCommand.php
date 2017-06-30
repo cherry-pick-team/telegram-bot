@@ -79,7 +79,7 @@ class SearchCommand extends UserCommand
                         'caption' => $caption . ' (Album "' . $song['album']['name'] . '")',
                     ], $tmpFile);
 
-                    sleep(1);
+                    sleep(4);
                 }
 
                 return Request::sendMessage([
