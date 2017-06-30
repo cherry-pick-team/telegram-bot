@@ -53,11 +53,6 @@ class SearchCommand extends UserCommand
                     'text' => 'We couldn\'t find any songs... Sorry :-(',
                 ]);
             } else {
-                Request::sendChatAction([
-                    'chat_id' => $chat_id,
-                    'action' => 'typing',
-                ]);
-
                 $i = 0;
                 foreach ($result as $song) {
                     if (++$i > 3) {
@@ -74,14 +69,17 @@ class SearchCommand extends UserCommand
                     $tmpFile = tempnam(sys_get_temp_dir(), 'album_cover_url');
                     file_put_contents($tmpFile, file_get_contents($coverUrl));
 
+                    Request::sendChatAction([
+                        'chat_id' => $chat_id,
+                        'action' => 'typing',
+                    ]);
+
                     Request::sendPhoto([
                         'chat_id' => $chat_id,
                         'caption' => $caption . ' (Album "' . $song['album']['name'] . '")',
                     ], $tmpFile);
-                    Request::sendMessage([
-                        'chat_id' => $chat_id,
-                        'text' => $caption,
-                    ]);
+
+                    sleep(1);
                 }
 
                 return Request::sendMessage([
