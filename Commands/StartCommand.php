@@ -18,10 +18,6 @@ class StartCommand extends UserCommand
     /**
      * @var string
      */
-    protected $usage = '/search <words>';
-    /**
-     * @var string
-     */
     protected $version = '0.1.0';
 
     /**
@@ -36,7 +32,7 @@ class StartCommand extends UserCommand
         $chat_id = $message->getChat()->getId();
         $from = $message->getFrom();
 
-        $welcomeText = 'Hello, ' . $from->getUsername() . '!' . "\n";
+        $welcomeText = 'Hello, ' . $from->getUsername() . '! ';
         $welcomeText .= 'This is ShoZaSong. Try using /search to find some songs.';
         return Request::sendMessage([
             'chat_id' => $chat_id,
