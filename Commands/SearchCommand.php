@@ -144,6 +144,6 @@ class SearchCommand extends UserCommand
      */
     protected function getSearchUrl($query)
     {
-        return 'https://zsong.ru/search/' . urlencode($query);
+        return 'https://zsong.ru/search/' . rawurlencode($query);
     }
 }
