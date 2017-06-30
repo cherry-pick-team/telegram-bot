@@ -78,7 +78,7 @@ class SearchCommand extends UserCommand
                         'chat_id' => $chat_id,
                         'caption' => $caption . ' (Album "' . $song['album']['name'] . '")',
                     ], $tmpFile);
-                    
+
                     Request::sendChatAction([
                         'chat_id' => $chat_id,
                         'action' => 'typing',
@@ -89,7 +89,7 @@ class SearchCommand extends UserCommand
 
                 return Request::sendMessage([
                     'chat_id' => $chat_id,
-                    'text' => 'That\'s all!',
+                    'text' => 'That\'s all! Full search results: ' . $this->getSearchUrl($words),
                 ]);
             }
         }
