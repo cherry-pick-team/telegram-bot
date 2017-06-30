@@ -69,10 +69,15 @@ class SearchCommand extends UserCommand
 
                     $caption = '"' . $song['title'] . '" by ' . $song['author'];
 
+                    $coverUrl = $song['album']['cover_url'];
+
+                    $tmpFile = tempnam(sys_get_temp_dir(), 'album_cover_url');
+                    file_put_contents($tmpFile, file_get_contents($coverUrl));
+
                     Request::sendPhoto([
                         'chat_id' => $chat_id,
-                        'caption' => $caption,
-                    ]);
+                        'caption' => $caption . ' (Album "' . $song['album']['name'] . '")',
+                    ], $tmpFile);
                     Request::sendMessage([
                         'chat_id' => $chat_id,
                         'text' => $caption,
@@ -107,7 +112,12 @@ class SearchCommand extends UserCommand
             $response = json_decode($response, true);
 
             if ($response && is_array($response) && count($response) > 0) {
-                return $response;
+                if (array_key_exists('code', $response) &&
+                    array_key_exists('fields', $response) &&
+                    array_key_exists('message', $response)
+                ) {
+                    return [];
+                }
             }
         }
 
