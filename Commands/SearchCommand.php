@@ -96,7 +96,7 @@ class SearchCommand extends UserCommand
             }
         }
 
-        $usage = 'Чтобы искать напишите: ' . $this->getUsage();
+        $usage = 'Чтобы искать, напишите: ' . $this->getUsage();
         return Request::sendMessage([
             'chat_id' => $chat_id,
             'text' => $usage,
