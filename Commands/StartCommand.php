@@ -36,8 +36,8 @@ class StartCommand extends SystemCommand
         $chat_id = $message->getChat()->getId();
         $from = $message->getFrom();
 
-        $welcomeText = 'Hello, ' . $from->getUsername() . '! ' . PHP_EOL;
-        $welcomeText .= 'This is ShoZaSong. Try using /search to find some songs.';
+        $welcomeText = 'Привет, ' . $from->getUsername() . '! ' . PHP_EOL;
+        $welcomeText .= 'Это ШоЗаСонг. Набери /search, чтобы искать. Например, "/search hello" найдет нашу любимую Адель.';
         return Request::sendMessage([
             'chat_id' => $chat_id,
             'text' => $welcomeText,

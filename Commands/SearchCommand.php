@@ -21,7 +21,7 @@ class SearchCommand extends UserCommand
     /**
      * @var string
      */
-    protected $usage = '/search <words>';
+    protected $usage = '/search <слова>';
     /**
      * @var string
      */
@@ -45,12 +45,12 @@ class SearchCommand extends UserCommand
             if ($result === null) {
                 return Request::sendMessage([
                     'chat_id' => $chat_id,
-                    'text' => 'Something is wrong with service, please try your query again later',
+                    'text' => 'С нашим сервисом что-то не так, попробуйте поискать чуть позже',
                 ]);
             } elseif (empty($result)) {
                 return Request::sendMessage([
                     'chat_id' => $chat_id,
-                    'text' => 'We couldn\'t find any songs... Sorry :-(',
+                    'text' => 'Мы не смогли найти ни одной песни... Сорян :-(',
                 ]);
             } else {
                 $i = 0;
@@ -59,11 +59,11 @@ class SearchCommand extends UserCommand
                         return Request::sendMessage([
                             'chat_id' => $chat_id,
                             'parse_mode' => 'MARKDOWN',
-                            'text' => 'More search results: [' . $words . '](' . $this->getSearchUrl($words) . ')',
+                            'text' => 'Больше песен: [' . $words . '](' . $this->getSearchUrl($words) . ')',
                         ]);
                     }
 
-                    $caption = '"' . $song['title'] . '" by ' . $song['author'];
+                    $caption = '"' . $song['title'] . '", ' . $song['author'];
 
                     $coverUrl = $song['album']['cover_url'];
 
@@ -77,7 +77,7 @@ class SearchCommand extends UserCommand
 
                     Request::sendPhoto([
                         'chat_id' => $chat_id,
-                        'caption' => $caption . ' (Album "' . $song['album']['name'] . '")',
+                        'caption' => $caption . ' (Альбом "' . $song['album']['name'] . '")',
                     ], $tmpFile);
 
                     Request::sendChatAction([
@@ -91,12 +91,12 @@ class SearchCommand extends UserCommand
                 return Request::sendMessage([
                     'chat_id' => $chat_id,
                     'parse_mode' => 'MARKDOWN',
-                    'text' => 'That\'s all! All the search results: [' . $words . '](' . $this->getSearchUrl($words) . ')',
+                    'text' => 'Вот и всё! Все результаты поиска: [' . $words . '](' . $this->getSearchUrl($words) . ')',
                 ]);
             }
         }
 
-        $usage = 'Command usage: ' . $this->getUsage();
+        $usage = 'Чтобы искать напишите: ' . $this->getUsage();
         return Request::sendMessage([
             'chat_id' => $chat_id,
             'text' => $usage,
