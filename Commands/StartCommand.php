@@ -22,7 +22,7 @@ class StartCommand extends SystemCommand
     /**
      * @var string
      */
-    protected $version = '0.1.0';
+    protected $version = '0.2.0';
 
     /**
      * Command execute method
@@ -36,7 +36,15 @@ class StartCommand extends SystemCommand
         $chat_id = $message->getChat()->getId();
         $from = $message->getFrom();
 
-        $welcomeText = 'Привет, ' . $from->getUsername() . '! ' . PHP_EOL;
+        $welcomeText = 'Привет';
+
+        $username = trim($from->getUsername());
+        if (!empty($username)) {
+            $welcomeText .= ', ' . $username;
+        }
+
+        $welcomeText .= '!' . PHP_EOL;
+
         $welcomeText .= 'Это ШоЗаСонг. Набери /search, чтобы искать. Например, "/search hello" найдет нашу любимую Адель.';
         return Request::sendMessage([
             'chat_id' => $chat_id,
