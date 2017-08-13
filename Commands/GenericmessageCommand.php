@@ -31,6 +31,15 @@ class GenericmessageCommand extends SystemCommand
         $message = $this->getMessage();
         $chat_id = $message->getChat()->getId();
 
+        $voice = $message->getVoice();
+
+        if ($voice) {
+            return Request::sendMessage([
+                'chat_id' => $chat_id,
+                'text' => sprintf('This is voice, "%s"', var_export($voice, true)),
+            ]);
+        }
+
         return Request::sendMessage([
             'chat_id' => $chat_id,
             'text' => sprintf('Получили "%s"', var_export($message, true)),
