@@ -1,5 +1,11 @@
 {
   "require": {
-    "longman/telegram-bot": "*"
+    "longman/telegram-bot": "*",
+    "guzzlehttp/guzzle": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ShoZaSong\\Bot\\": "src/"
+    }
   }
 }

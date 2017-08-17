@@ -34,10 +34,24 @@ class GenericmessageCommand extends SystemCommand
         $voice = $message->getVoice();
 
         if ($voice) {
-            return Request::sendMessage([
+            Request::sendMessage([
                 'chat_id' => $chat_id,
-                'text' => sprintf('This is voice, "%s"', var_export($voice, true)),
+                'text' => 'Слушаем...',
             ]);
+
+            Request::sendChatAction([
+                'chat_id' => $chat_id,
+                'action' => 'typing',
+            ]);
+
+            $file = Request::getFile([
+                'file_id' => $voice->getFileId(),
+            ]);
+
+            if ($file->isOk()) {
+                $voiceFileUrl = $file->getResult();
+                Request::downloadFile($voiceFileUrl);
+            }
         }
 
         return Request::sendMessage([
