@@ -3,7 +3,7 @@
 namespace Longman\TelegramBot\Commands\SystemCommands;
 
 use Longman\TelegramBot\Commands\SystemCommand;
-use Longman\TelegramBot\Request;
+use ShoZaSong\Bot\Response\ResponseSearch;
 
 class GenericmessageCommand extends SystemCommand
 {
@@ -28,35 +28,8 @@ class GenericmessageCommand extends SystemCommand
      */
     public function execute()
     {
-        $message = $this->getMessage();
-        $chat_id = $message->getChat()->getId();
-
-        $voice = $message->getVoice();
-
-        if ($voice) {
-            Request::sendMessage([
-                'chat_id' => $chat_id,
-                'text' => 'Слушаем...',
-            ]);
-
-            Request::sendChatAction([
-                'chat_id' => $chat_id,
-                'action' => 'typing',
-            ]);
-
-            $file = Request::getFile([
-                'file_id' => $voice->getFileId(),
-            ]);
-
-            if ($file->isOk()) {
-                $voiceFileUrl = $file->getResult();
-                Request::downloadFile($voiceFileUrl);
-            }
-        }
-
-        return Request::sendMessage([
-            'chat_id' => $chat_id,
-            'text' => sprintf('Получили "%s"', var_export($message, true)),
-        ]);
+        $responseSearch = new ResponseSearch($this->getMessage());
+        $responseSearch->setPhrase($this->getMessage()->getText());
+        return $responseSearch->send();
     }
 }
