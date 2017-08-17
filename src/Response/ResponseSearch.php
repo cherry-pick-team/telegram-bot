@@ -23,16 +23,20 @@ class ResponseSearch extends Response
     {
         $chatId = $this->getMessage()->getChat()->getId();
 
+        if (trim($this->getPhrase()) === '') {
+            return $this->responseFactory->sendMessage($chatId, 'Пустой поисковый запрос...');
+        }
+
         $api = new OurApi;
         $searchResults = $api->search($this->getPhrase(), $this->isVoice());
 
         if ($searchResults === null) {
             return $this->responseFactory->sendMessage($chatId, 'С нашим сервисом что-то не так, попробуйте поискать чуть позже.');
-        } elseif (empty($result)) {
+        } elseif (empty($searchResults)) {
             return $this->responseFactory->sendMessage($chatId, 'Мы не смогли найти ни одной композиции... Сорян :-(');
         } else {
             $i = 0;
-            foreach ($result as $song) {
+            foreach ($searchResults as $song) {
                 if (++$i > 3) {
                     return $this->responseFactory->sendMessage($chatId,
                         sprintf('Больше песен: [%s](%s)',
