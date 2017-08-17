@@ -14,19 +14,19 @@ interface ResponseFactoryInterface
 
     /**
      * @param int $chatId
-     * @param string $url
+     * @param mixed $photo
      * @param string $caption
      * @return \Longman\TelegramBot\Entities\ServerResponse
      */
-    public function sendPhotoByUrl($chatId, $url, $caption = '');
+    public function sendPhoto($chatId, $photo, $caption = '');
 
     /**
      * @param int $chatId
-     * @param string $filePath
+     * @param mixed $filePath
      * @param string $caption
      * @return \Longman\TelegramBot\Entities\ServerResponse
      */
-    public function sendAudio($chatId, $filePath, $caption = '');
+    public function sendAudio($chatId, $audio, $caption = '');
 
     /**
      * @param int $chatId

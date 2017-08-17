@@ -51,7 +51,7 @@ class ResponseSearch extends Response
                 $coverUrl = $song['album']['cover_url'];
 
                 $this->responseFactory->sendActionUploadPhoto($chatId);
-                $this->responseFactory->sendPhotoByUrl($chatId, $coverUrl, $caption);
+                $this->responseFactory->sendPhoto($chatId, $coverUrl, $caption);
                 $this->responseFactory->sendActionTyping($chatId);
 
                 sleep(3);

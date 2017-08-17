@@ -26,11 +26,11 @@ class ResponseFactory implements ResponseFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function sendPhotoByUrl($chatId, $url, $caption = '')
+    public function sendPhoto($chatId, $photo, $caption = '')
     {
         $data = [
             'chat_id' => $chatId,
-            'photo' => $url,
+            'photo' => $photo,
         ];
 
         if (!empty($caption)) {
@@ -43,17 +43,18 @@ class ResponseFactory implements ResponseFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function sendAudio($chatId, $filePath, $caption = '')
+    public function sendAudio($chatId, $audio, $caption = '')
     {
         $data = [
             'chat_id' => $chatId,
+            'audio' => $audio,
         ];
 
         if (!empty($caption)) {
             $data['caption'] = $caption;
         }
 
-        return Request::sendAudio($data, $filePath);
+        return Request::sendAudio($data);
     }
 
     /**
