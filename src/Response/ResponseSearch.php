@@ -50,11 +50,8 @@ class ResponseSearch extends Response
                 $caption = sprintf('"%s", %s (Альбом "%s")', $song['title'], $song['author'], $song['album']['name']);
                 $coverUrl = $song['album']['cover_url'];
 
-                $tmpFile = tempnam(sys_get_temp_dir(), 'album_cover_url');
-                file_put_contents($tmpFile, file_get_contents($coverUrl));
-
                 $this->responseFactory->sendActionUploadPhoto($chatId);
-                $this->responseFactory->sendPhoto($chatId, $tmpFile, $caption);
+                $this->responseFactory->sendPhotoByUrl($chatId, $coverUrl, $caption);
                 $this->responseFactory->sendActionTyping($chatId);
 
                 sleep(3);

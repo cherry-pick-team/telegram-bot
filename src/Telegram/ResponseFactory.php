@@ -26,17 +26,18 @@ class ResponseFactory implements ResponseFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function sendPhoto($chatId, $filePath, $caption = '')
+    public function sendPhotoByUrl($chatId, $url, $caption = '')
     {
         $data = [
             'chat_id' => $chatId,
+            'photo' => $url,
         ];
 
         if (!empty($caption)) {
             $data['caption'] = $caption;
         }
 
-        return Request::sendPhoto($data, $filePath);
+        return Request::sendPhoto($data);
     }
 
     /**
