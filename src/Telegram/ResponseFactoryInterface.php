@@ -22,7 +22,7 @@ interface ResponseFactoryInterface
 
     /**
      * @param int $chatId
-     * @param mixed $filePath
+     * @param mixed $audio
      * @param string $caption
      * @return \Longman\TelegramBot\Entities\ServerResponse
      */

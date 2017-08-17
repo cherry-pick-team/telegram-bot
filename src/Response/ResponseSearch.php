@@ -54,6 +54,18 @@ class ResponseSearch extends Response
                 $this->responseFactory->sendPhoto($chatId, $coverUrl, $caption);
                 $this->responseFactory->sendActionTyping($chatId);
 
+                $chunks = $song['lyrics_chunks'];
+                $j = 0;
+                foreach ($chunks as $chunk) {
+                    if (++$j > 2) {
+                        break;
+                    }
+
+                    $cropUrl = $api->getCropUrl($song['id'], $chunk['start'], $chunk['end']);
+                    $chunkLyrics = implode(PHP_EOL, $chunk['lyrics']);
+                    $this->responseFactory->sendAudio($chatId, $cropUrl, $chunkLyrics);
+                }
+
                 sleep(3);
             }
 

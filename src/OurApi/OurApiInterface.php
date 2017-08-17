@@ -23,4 +23,12 @@ interface OurApiInterface
      * @return string
      */
     public function getFullSearchLink($phrase, $voice = false);
+
+    /**
+     * @param string $id
+     * @param int $start
+     * @param int $end
+     * @return string
+     */
+    public function getCropUrl($id, $start, $end);
 }

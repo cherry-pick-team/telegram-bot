@@ -94,4 +94,15 @@ class OurApi implements OurApiInterface
         }
         return $this->client;
     }
+
+    /**
+     * @param string $id
+     * @param int $start
+     * @param int $end
+     * @return string
+     */
+    public function getCropUrl($id, $start, $end)
+    {
+        return "https://zsong.ru/crop/get_song/?id=$id&from_ms=$start&to_ms=$end";
+    }
 }
