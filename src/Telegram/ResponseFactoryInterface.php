@@ -24,9 +24,10 @@ interface ResponseFactoryInterface
      * @param int $chatId
      * @param mixed $audio
      * @param string $caption
+     * @param array $args
      * @return \Longman\TelegramBot\Entities\ServerResponse
      */
-    public function sendAudio($chatId, $audio, $caption = '');
+    public function sendAudio($chatId, $audio, $caption = '', array $args = []);
 
     /**
      * @param int $chatId

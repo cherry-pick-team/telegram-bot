@@ -61,9 +61,12 @@ class ResponseSearch extends Response
                         break;
                     }
 
-                    $cropUrl = $api->getCropUrl($song['id'], $chunk['start'], $chunk['end']);
+                    $cropUrl = $api->getCropUrl($song['mongo_id'], $chunk['start'], $chunk['end']);
                     $chunkLyrics = implode(PHP_EOL, $chunk['lyrics']);
-                    $this->responseFactory->sendAudio($chatId, $cropUrl, $chunkLyrics);
+                    $this->responseFactory->sendAudio($chatId, $cropUrl, $chunkLyrics, [
+                        'performer' => $song['author'],
+                        'title' => $song['title'],
+                    ]);
                 }
 
                 sleep(3);

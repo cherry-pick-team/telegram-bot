@@ -43,7 +43,7 @@ class ResponseFactory implements ResponseFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function sendAudio($chatId, $audio, $caption = '')
+    public function sendAudio($chatId, $audio, $caption = '', array $args = [])
     {
         $data = [
             'chat_id' => $chatId,
