@@ -68,7 +68,7 @@ class ResponseSearch extends Response
                     $audio = file_get_contents($cropUrl);
 
                     $tmpFile = tempnam(sys_get_temp_dir(), 'audio');
-                    file_put_contents($tmpFile, file_get_contents($audio));
+                    file_put_contents($tmpFile, $audio);
 
                     $this->responseFactory->sendAudio($chatId, Request::encodeFile($tmpFile), $chunkLyrics, [
                         'performer' => $song['author'],
@@ -76,7 +76,7 @@ class ResponseSearch extends Response
                     ]);
                 }
 
-                sleep(3);
+                sleep(1);
             }
 
             return $this->responseFactory->sendMessage($chatId,
