@@ -1,11 +1,11 @@
 <?php
 
-namespace Longman\TelegramBot\Commands\SystemCommands;
+namespace Longman\TelegramBot\Commands\UserCommands;
 
-use Longman\TelegramBot\Commands\SystemCommand;
+use Longman\TelegramBot\Commands\UserCommand;
 use ShoZaSong\Bot\Response\ResponseHelp;
 
-class HelpCommand extends SystemCommand
+class HelpCommand extends UserCommand
 {
     /**
      * @var string
