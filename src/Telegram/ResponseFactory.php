@@ -50,6 +50,8 @@ class ResponseFactory implements ResponseFactoryInterface
             'audio' => $audio,
         ];
 
+        $data = array_replace($data, $args);
+
         if (!empty($caption)) {
             $data['caption'] = $caption;
         }
