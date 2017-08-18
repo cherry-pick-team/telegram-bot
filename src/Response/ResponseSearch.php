@@ -2,6 +2,7 @@
 
 namespace ShoZaSong\Bot\Response;
 
+use Longman\TelegramBot\Request;
 use ShoZaSong\Bot\OurApi\OurApi;
 
 class ResponseSearch extends Response
@@ -63,7 +64,13 @@ class ResponseSearch extends Response
 
                     $cropUrl = $api->getCropUrl($song['mongo_id'], $chunk['start'], $chunk['end']);
                     $chunkLyrics = implode(PHP_EOL, $chunk['lyrics']);
-                    $this->responseFactory->sendAudio($chatId, $cropUrl, $chunkLyrics, [
+
+                    $audio = file_get_contents($cropUrl);
+
+                    $tmpFile = tempnam(sys_get_temp_dir(), 'audio');
+                    file_put_contents($tmpFile, file_get_contents($audio));
+
+                    $this->responseFactory->sendAudio($chatId, Request::encodeFile($tmpFile), $chunkLyrics, [
                         'performer' => $song['author'],
                         'title' => $song['title'],
                     ]);
