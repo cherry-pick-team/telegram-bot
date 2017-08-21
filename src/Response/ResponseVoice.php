@@ -44,10 +44,10 @@ class ResponseVoice extends Response
                 } else {
                     $buttons = [];
                     foreach ($searchResults as $result) {
-                        $buttons[] = [[
+                        $buttons[] = [
                             'text' => $result['query'] . '(' . $result['songs'] . ')',
                             'callback_data' => $result['query'],
-                        ]];
+                        ];
                     }
 
                     $keyboard = new InlineKeyboard($buttons);
