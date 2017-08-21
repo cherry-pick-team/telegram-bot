@@ -12,7 +12,6 @@ class ResponseVoice extends Response
     public function send()
     {
         $chatId = $this->getMessage()->getChat()->getId();
-        $this->responseFactory->sendMessage($chatId, 'Мы начинаем обрабатывать звуковое сообщение...');
 
         $voice = $this->getMessage()->getVoice();
         $fileId = $voice->getFileId();

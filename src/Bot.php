@@ -14,9 +14,15 @@ class Bot implements BotInterface
     /**
      * Bot constructor.
      */
-    public function __construct()
+    public function __construct($downloadsPath = null)
     {
         $this->initTelegram();
+
+        if (null === $downloadsPath) {
+            $downloadsPath = sys_get_temp_dir();
+        }
+
+        $this->telegram->setDownloadPath($downloadsPath);
     }
 
     /**
