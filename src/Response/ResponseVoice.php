@@ -32,11 +32,9 @@ class ResponseVoice extends Response
             if ($isOk) {
                 $this->responseFactory->sendMessage($chatId, 'Мы получили звуковое сообщение...');
 
-                $filePath = $this->telegram->getDownloadPath() . $voiceFile->getFilePath();
-
-                $this->responseFactory->sendMessage($chatId, 'File saved: ' . $filePath);
+                $filePath = $this->telegram->getDownloadPath() . '/' . $voiceFile->getFilePath();
                 $ourApi = new OurApi;
-                $searchData = $ourApi->searchByVoice($filePath);
+                $searchData = $ourApi->searchByVoice($filePath, 'my.ogg');
 
                 $this->responseFactory->sendMessage($chatId, var_export($searchData, 1));
             }

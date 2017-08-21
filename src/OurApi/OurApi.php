@@ -49,9 +49,10 @@ class OurApi implements OurApiInterface
 
     /**
      * @param string $file
+     * @param string|null $fileName
      * @return array|\Psr\Http\Message\ResponseInterface
      */
-    public function searchByVoice($file)
+    public function searchByVoice($file, $fileName = null)
     {
         $uri = 'search/voice';
         $response = $this->getClient()->post($uri, [
@@ -59,6 +60,7 @@ class OurApi implements OurApiInterface
                 [
                     'name' => 'voice',
                     'contents' => fopen($file, 'r'),
+                    'filename' => $fileName === null ? basename($file) : $fileName,
                 ],
             ],
         ]);

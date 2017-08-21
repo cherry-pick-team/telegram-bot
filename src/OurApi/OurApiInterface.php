@@ -13,9 +13,10 @@ interface OurApiInterface
 
     /**
      * @param string $file
+     * @param null $fileName
      * @return array
      */
-    public function searchByVoice($file);
+    public function searchByVoice($file, $fileName = null);
 
     /**
      * @param string $phrase
