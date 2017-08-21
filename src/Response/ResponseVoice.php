@@ -2,9 +2,9 @@
 
 namespace ShoZaSong\Bot\Response;
 
-use Longman\TelegramBot\Entities\File;
 use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Telegram;
+use ShoZaSong\Bot\OurApi\OurApi;
 
 class ResponseVoice extends Response
 {
@@ -27,19 +27,18 @@ class ResponseVoice extends Response
         if ($voiceData->isOk()) {
 
             $voiceFile = $voiceData->getResult();
-            /**
-             * @var File $voiceFile
-             */
             $isOk = Request::downloadFile($voiceFile);
 
             if ($isOk) {
                 $this->responseFactory->sendMessage($chatId, 'Мы получили звуковое сообщение...');
 
-                $filePath = $this->telegram->getDownloadPath() . $voiceData->getFilePath();
+                $filePath = $this->telegram->getDownloadPath() . $voiceFile->getFilePath();
 
                 $this->responseFactory->sendMessage($chatId, 'File saved: ' . $filePath);
-//                $ourApi = new OurApi;
-//                $ourApi->searchByVoice($filePath);
+                $ourApi = new OurApi;
+                $searchData = $ourApi->searchByVoice($filePath);
+
+                $this->responseFactory->sendMessage($chatId, var_export($searchData, 1));
             }
         }
 
