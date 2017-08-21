@@ -36,6 +36,9 @@ class ResponseSearch extends Response
         } elseif (empty($searchResults)) {
             return $this->responseFactory->sendMessage($chatId, 'Мы не смогли найти ни одной композиции... Сорян :-(');
         } else {
+            $searchName = $this->isVoice() ? 'Голосовой поиск' : 'Поиск';
+            $this->responseFactory->sendMessage($chatId, sprintf('*%s*: %s', $searchName, $this->getPhrase()), 'MARKDOWN');
+
             $i = 0;
             foreach ($searchResults as $song) {
                 if (++$i > 3) {
