@@ -49,7 +49,7 @@ class OurApi implements OurApiInterface
 
     /**
      * @param string $file
-     * @return array
+     * @return array|\Psr\Http\Message\ResponseInterface
      */
     public function searchByVoice($file)
     {
@@ -62,6 +62,21 @@ class OurApi implements OurApiInterface
                 ],
             ],
         ]);
+
+        $arr = json_decode($response->getBody()->getContents(), true);
+
+        if ($arr && is_array($arr) && count($arr) > 0) {
+            if (array_key_exists('code', $arr) &&
+                array_key_exists('fields', $arr) &&
+                array_key_exists('message', $arr)
+            ) {
+                return [];
+            }
+
+            return $arr;
+        }
+
+        return null;
     }
 
     /**

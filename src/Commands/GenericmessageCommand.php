@@ -4,6 +4,7 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 
 use Longman\TelegramBot\Commands\SystemCommand;
 use ShoZaSong\Bot\Response\ResponseSearch;
+use ShoZaSong\Bot\Response\ResponseVoice;
 
 class GenericmessageCommand extends SystemCommand
 {
@@ -28,6 +29,11 @@ class GenericmessageCommand extends SystemCommand
      */
     public function execute()
     {
+        if ($this->getMessage()->getVoice()) {
+            $responseVoice = new ResponseVoice($this->getMessage());
+            return $responseVoice->send();
+        }
+
         $responseSearch = new ResponseSearch($this->getMessage());
         $responseSearch->setPhrase($this->getMessage()->getText());
         return $responseSearch->send();
