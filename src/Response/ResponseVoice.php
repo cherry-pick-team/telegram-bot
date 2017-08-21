@@ -2,6 +2,7 @@
 
 namespace ShoZaSong\Bot\Response;
 
+use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Telegram;
 use ShoZaSong\Bot\OurApi\OurApi;
@@ -41,9 +42,19 @@ class ResponseVoice extends Response
                 } elseif (empty($searchResults)) {
                     return $this->responseFactory->sendMessage($chatId, 'Моя твоя ходила. Ничего не поняли!');
                 } else {
+                    $buttons = [];
                     foreach ($searchResults as $result) {
-                        $this->responseFactory->sendMessage($chatId, $result['query']);
+                        $buttons[] = [[
+                            'text' => $result['query'] . '(' . $result['songs'] . ')',
+                            'callback_data' => $result['query'],
+                        ]];
                     }
+
+                    $keyboard = new InlineKeyboard($buttons);
+
+                    return $this->responseFactory->sendMessage($chatId, 'Что же вы сказали?', null, [
+                        'reply_markup' => $keyboard,
+                    ]);
                 }
             }
         }

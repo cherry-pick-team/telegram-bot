@@ -8,17 +8,19 @@ interface ResponseFactoryInterface
      * @param int $chatId
      * @param string $text
      * @param string|null $parseMode
+     * @param array $args
      * @return \Longman\TelegramBot\Entities\ServerResponse
      */
-    public function sendMessage($chatId, $text, $parseMode = null);
+    public function sendMessage($chatId, $text, $parseMode = null, array $args = []);
 
     /**
      * @param int $chatId
      * @param mixed $photo
      * @param string $caption
+     * @param array $args
      * @return \Longman\TelegramBot\Entities\ServerResponse
      */
-    public function sendPhoto($chatId, $photo, $caption = '');
+    public function sendPhoto($chatId, $photo, $caption = '', array $args = []);
 
     /**
      * @param int $chatId

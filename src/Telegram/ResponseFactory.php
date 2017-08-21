@@ -9,7 +9,7 @@ class ResponseFactory implements ResponseFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function sendMessage($chatId, $text, $parseMode = null)
+    public function sendMessage($chatId, $text, $parseMode = null, array $args = [])
     {
         $data = [
             'chat_id' => $chatId,
@@ -20,13 +20,15 @@ class ResponseFactory implements ResponseFactoryInterface
             $data['parse_mode'] = $parseMode;
         }
 
+        $data = array_replace($data, $args);
+
         return Request::sendMessage($data);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function sendPhoto($chatId, $photo, $caption = '')
+    public function sendPhoto($chatId, $photo, $caption = '', array $args = [])
     {
         $data = [
             'chat_id' => $chatId,
@@ -36,6 +38,8 @@ class ResponseFactory implements ResponseFactoryInterface
         if (!empty($caption)) {
             $data['caption'] = $caption;
         }
+
+        $data = array_replace($data, $args);
 
         return Request::sendPhoto($data);
     }
@@ -50,11 +54,11 @@ class ResponseFactory implements ResponseFactoryInterface
             'audio' => $audio,
         ];
 
-        $data = array_replace($data, $args);
-
         if (!empty($caption)) {
             $data['caption'] = $caption;
         }
+
+        $data = array_replace($data, $args);
 
         return Request::sendAudio($data);
     }
