@@ -65,8 +65,7 @@ class ResponseVoice extends Response
     /**
      * @param Telegram $telegram
      */
-    public
-    function setTelegram($telegram)
+    public function setTelegram($telegram)
     {
         $this->telegram = $telegram;
     }

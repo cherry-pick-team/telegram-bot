@@ -36,7 +36,17 @@ class GenericmessageCommand extends SystemCommand
         }
 
         $responseSearch = new ResponseSearch($this->getMessage());
-        $responseSearch->setPhrase($this->getMessage()->getText());
+
+        $text = $this->getMessage()->getText();
+        $isVoice = false;
+
+        if (preg_match('/^"(.+)"$/', $text, $matches)) {
+            $text = $matches[1];
+            $isVoice = true;
+        }
+
+        $responseSearch->setPhrase($text);
+        $responseSearch->setVoice($isVoice);
         return $responseSearch->send();
     }
 }
