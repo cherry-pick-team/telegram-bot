@@ -55,7 +55,9 @@ class ResponseSearch extends Response
                 $coverUrl = $song['album']['cover_url'];
 
                 $this->responseFactory->sendActionUploadPhoto($chatId);
-                $this->responseFactory->sendPhoto($chatId, $coverUrl, $caption);
+                $this->responseFactory->sendPhoto($chatId, $coverUrl, $caption, [
+                    'disable_notification' => true,
+                ]);
                 $this->responseFactory->sendActionTyping($chatId);
 
                 $chunks = $song['lyrics_chunks'];
@@ -76,6 +78,7 @@ class ResponseSearch extends Response
                     $this->responseFactory->sendAudio($chatId, Request::encodeFile($tmpFile), $chunkLyrics, [
                         'performer' => $song['author'],
                         'title' => $song['title'],
+                        'disable_notification' => true,
                     ]);
                 }
 
