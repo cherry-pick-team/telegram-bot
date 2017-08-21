@@ -36,7 +36,7 @@ class GenericmessageCommand extends SystemCommand
             return $responseVoice->send();
         }
 
-        if (ResponseVoice::TEXT_ON_WRONG) {
+        if ($this->getMessage()->getText() === ResponseVoice::TEXT_ON_WRONG) {
             $responseVoiceWrong = new ResponseVoiceWrong($this->getMessage());
             return $responseVoiceWrong->send();
         }
