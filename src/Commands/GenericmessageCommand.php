@@ -31,6 +31,7 @@ class GenericmessageCommand extends SystemCommand
     {
         if ($this->getMessage()->getVoice()) {
             $responseVoice = new ResponseVoice($this->getMessage());
+            $responseVoice->setTelegram($this->getTelegram());
             return $responseVoice->send();
         }
 
