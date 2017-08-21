@@ -34,9 +34,17 @@ class ResponseVoice extends Response
 
                 $filePath = $this->telegram->getDownloadPath() . '/' . $voiceFile->getFilePath();
                 $ourApi = new OurApi;
-                $searchData = $ourApi->searchByVoice($filePath, 'my.ogg');
+                $searchResults = $ourApi->searchByVoice($filePath, 'my.ogg');
 
-                $this->responseFactory->sendMessage($chatId, var_export($searchData, 1));
+                if ($searchResults === null) {
+                    return $this->responseFactory->sendMessage($chatId, 'С нашим сервисом что-то не так, попробуйте поискать чуть позже.');
+                } elseif (empty($searchResults)) {
+                    return $this->responseFactory->sendMessage($chatId, 'Моя твоя ходила. Ничего не поняли!');
+                } else {
+                    foreach ($searchResults as $result) {
+                        $this->responseFactory->sendMessage($chatId, $result['query']);
+                    }
+                }
             }
         }
 
@@ -46,7 +54,8 @@ class ResponseVoice extends Response
     /**
      * @param Telegram $telegram
      */
-    public function setTelegram($telegram)
+    public
+    function setTelegram($telegram)
     {
         $this->telegram = $telegram;
     }
