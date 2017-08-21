@@ -55,7 +55,7 @@ class ResponseVoice extends Response
                         ->setOneTimeKeyboard(true)
                         ->setSelective(false);
 
-                    return $this->responseFactory->sendMessage($chatId, 'Что же вы сказали?', null, [
+                    return $this->responseFactory->sendMessage($chatId, 'Вот как мы вас поняли', null, [
                         'reply_markup' => $keyboard,
                     ]);
                 }

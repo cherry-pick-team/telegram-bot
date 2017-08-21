@@ -2,11 +2,15 @@
 
 namespace ShoZaSong\Bot\Response;
 
+use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Request;
 use ShoZaSong\Bot\OurApi\OurApi;
 
 class ResponseSearch extends Response
 {
+    const FEEDBACK_YES = 'feedback_yes';
+    const FEEDBACK_NO = 'feedback_no';
+
     /**
      * @var string
      */
@@ -39,16 +43,12 @@ class ResponseSearch extends Response
             $searchName = $this->isVoice() ? 'Голосовой поиск' : 'Поиск';
             $this->responseFactory->sendMessage($chatId, sprintf('*%s*: %s', $searchName, $this->getPhrase()), 'MARKDOWN');
 
+            $hasMore = false;
             $i = 0;
             foreach ($searchResults as $song) {
                 if (++$i > 3) {
-                    return $this->responseFactory->sendMessage($chatId,
-                        sprintf('Больше песен: [%s](%s)',
-                            $this->getPhrase(),
-                            $api->getFullSearchLink($this->getPhrase(), $this->isVoice())
-                        ),
-                        'MARKDOWN'
-                    );
+                    $hasMore = true;
+                    return $this->askFeedback($hasMore);
                 }
 
                 $caption = sprintf('"%s", %s (Альбом "%s")', $song['title'], $song['author'], $song['album']['name']);
@@ -64,6 +64,7 @@ class ResponseSearch extends Response
                 $j = 0;
                 foreach ($chunks as $chunk) {
                     if (++$j > 2) {
+                        $hasMore = true;
                         break;
                     }
 
@@ -85,14 +86,46 @@ class ResponseSearch extends Response
                 sleep(1);
             }
 
-            return $this->responseFactory->sendMessage($chatId,
-                sprintf('Вот и всё! Больше результатов: [%s](%s)',
-                    $this->getPhrase(),
-                    $api->getFullSearchLink($this->getPhrase(), $this->isVoice())
-                ),
-                'MARKDOWN'
-            );
+            return $this->askFeedback($hasMore);
         }
+    }
+
+    /**
+     * @param bool $hasMore
+     * @return \Longman\TelegramBot\Entities\ServerResponse
+     */
+    protected function askFeedback($hasMore = false)
+    {
+        $chatId = $this->getMessage()->getChat()->getId();
+        $api = new OurApi;
+
+        $message = '*Вот и всё!* Нашлось?';
+        $dataEnd = ':' . $this->getPhrase() . ':' . ($this->isVoice() ? '1' : '0');
+        $buttons = [
+            [
+                'text' => '👍',
+                'callback_data' => self::FEEDBACK_YES . $dataEnd,
+            ],
+            [
+                'text' => '👎',
+                'callback_data' => self::FEEDBACK_NO . $dataEnd,
+            ],
+        ];
+
+        if ($hasMore) {
+            $buttons[] = [
+                'text' => 'Больше результатов',
+                'url' => $api->getFullSearchLink($this->getPhrase(), $this->isVoice()),
+            ];
+        }
+
+        $keyboard = new InlineKeyboard([
+            $buttons,
+        ]);
+
+        return $this->responseFactory->sendMessage($chatId, $message, 'MARKDOWN', [
+            'reply_markup' => $keyboard,
+        ]);
     }
 
     /**
