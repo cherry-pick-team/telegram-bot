@@ -5,6 +5,7 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 use Longman\TelegramBot\Commands\SystemCommand;
 use ShoZaSong\Bot\Response\ResponseSearch;
 use ShoZaSong\Bot\Response\ResponseVoice;
+use ShoZaSong\Bot\Response\ResponseVoiceWrong;
 
 class GenericmessageCommand extends SystemCommand
 {
@@ -33,6 +34,11 @@ class GenericmessageCommand extends SystemCommand
             $responseVoice = new ResponseVoice($this->getMessage());
             $responseVoice->setTelegram($this->getTelegram());
             return $responseVoice->send();
+        }
+
+        if (ResponseVoice::TEXT_ON_WRONG) {
+            $responseVoiceWrong = new ResponseVoiceWrong($this->getMessage());
+            return $responseVoiceWrong->send();
         }
 
         $responseSearch = new ResponseSearch($this->getMessage());

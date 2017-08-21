@@ -9,6 +9,8 @@ use ShoZaSong\Bot\OurApi\OurApi;
 
 class ResponseVoice extends Response
 {
+    const TEXT_ON_WRONG = '—';
+
     /**
      * @var Telegram
      */
@@ -46,6 +48,7 @@ class ResponseVoice extends Response
                     foreach ($searchResults as $result) {
                         $buttons[] = '"' . $result['query'] . '"';
                     }
+                    $buttons[] = self::TEXT_ON_WRONG;
 
                     $keyboard = new Keyboard($buttons);
                     $keyboard->setResizeKeyboard(true)
