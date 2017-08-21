@@ -88,7 +88,7 @@ class ResponseSearch extends Response
             return $this->responseFactory->sendMessage($chatId,
                 sprintf('Вот и всё! Больше результатов: [%s](%s)',
                     $this->getPhrase(),
-                    $api->getFullSearchLink($this->getPhrase())
+                    $api->getFullSearchLink($this->getPhrase(), $this->isVoice())
                 ),
                 'MARKDOWN'
             );
