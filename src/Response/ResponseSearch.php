@@ -28,6 +28,8 @@ class ResponseSearch extends Response
     {
         $chatId = $this->getMessage()->getChat()->getId();
 
+        $this->responseFactory->setRemoveKeyboard(true);
+
         if (trim($this->getPhrase()) === '') {
             return $this->responseFactory->sendMessage($chatId, 'Пустой поисковый запрос...');
         }
@@ -119,9 +121,7 @@ class ResponseSearch extends Response
             ];
         }
 
-        $keyboard = new InlineKeyboard([
-            $buttons,
-        ]);
+        $keyboard = new InlineKeyboard($buttons);
 
         return $this->responseFactory->sendMessage($chatId, $message, 'MARKDOWN', [
             'reply_markup' => $keyboard,
